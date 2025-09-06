@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "867447335283",
+    "firebase_url": "https://mend-ai-616af-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "mend-ai-616af",
+    "storage_bucket": "mend-ai-616af.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867447335283:android:b915317252461702cafd06",
+        "android_client_info": {
+          "package_name": "com.example.mend_ai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeHUDm_gunWYFPBie-usFeFUocLFR6mqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
