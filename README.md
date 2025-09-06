@@ -231,4 +231,4 @@ For issues and questions:
 
 ---
 
-Built with ❤️ using Flutter and Firebase
+Built with ❤️ using Flutter and Supabase
