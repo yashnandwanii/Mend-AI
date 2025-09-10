@@ -122,7 +122,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen>
                           padding: const EdgeInsets.symmetric(horizontal: 24),
                           child: Column(
                             children: [
-                              SizedBox(height: constraints.maxHeight * 0.1),
+                              SizedBox(height: constraints.maxHeight * 0.05),
 
                               // Animated Logo Section
                               SlideTransition(
@@ -168,7 +168,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen>
                                               color: Colors.white,
                                             ),
                                           ),
-                                          const SizedBox(height: 40),
+                                          const SizedBox(height: 25),
 
                                           // Title with shimmer effect
                                           ShaderMask(
@@ -212,7 +212,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen>
                                 ),
                               ),
 
-                              const Spacer(flex: 2),
+                              SizedBox(height: constraints.maxHeight * 0.05),
 
                               // Features with stagger animation
                               AnimatedBuilder(
@@ -245,7 +245,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen>
                                 },
                               ),
 
-                              SizedBox(height: constraints.maxHeight * 0.1),
+                              SizedBox(height: constraints.maxHeight * 0.05),
 
                               // Get Started Button
                               SlideTransition(
@@ -255,7 +255,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen>
                                     AnimatedButton(
                                       onPressed: _handleGetStarted,
                                       width: double.infinity,
-                                      height: 64,
+                                      height: 50,
                                       backgroundColor: const Color(0xFF6366F1),
                                       child: const Text(
                                         'Get Started',
@@ -266,7 +266,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen>
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(height: 20),
+                                    const SizedBox(height: 10),
 
                                     Text(
                                       'By continuing, you agree to our Terms & Privacy Policy',
