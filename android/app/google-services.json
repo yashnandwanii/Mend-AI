@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "867447335283",
+    "firebase_url": "https://mend-ai-616af-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "mend-ai-616af",
+    "storage_bucket": "mend-ai-616af.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867447335283:android:b915317252461702cafd06",
+        "android_client_info": {
+          "package_name": "com.example.mend_ai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867447335283-36eli0u5o5h19li6b9g7lke24g2rpufl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeHUDm_gunWYFPBie-usFeFUocLFR6mqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "867447335283-36eli0u5o5h19li6b9g7lke24g2rpufl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "867447335283-k5mnj7vib7itao0u93i6bveo9pvcovgk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mendAi"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
