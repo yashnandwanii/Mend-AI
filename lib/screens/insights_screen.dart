@@ -438,7 +438,7 @@ class _InsightsScreenState extends ConsumerState<InsightsScreen>
         radarTouchData: RadarTouchData(enabled: false),
         dataSets: [
           RadarDataSet(
-            fillColor: Colors.blue.withOpacity(0.2),
+            fillColor: Colors.blue.withValues(alpha: 0.2),
             borderColor: Colors.blue,
             borderWidth: 2,
             entryRadius: 3,
@@ -633,9 +633,9 @@ class _InsightsScreenState extends ConsumerState<InsightsScreen>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,58 +1,52 @@
-// File: lib/main.dart
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'firebase_options.dart';
-import 'config/app_router.dart';
-import 'config/app_theme.dart';
-import 'services/permission_service.dart';
+import 'providers/firebase_app_state.dart';
+import 'screens/auth/splash_screen.dart';
+import 'theme/app_theme.dart';
+import 'widgets/aurora_background.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  var firebaseInitialized = false;
-  try {
-    if (Firebase.apps.isEmpty) {
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
-      firebaseInitialized = true;
-    } else {
-      firebaseInitialized = true;
-    }
-  } catch (e) {
-    //print('Warning: Firebase.initializeApp() failed: $e');
-    firebaseInitialized = false;
-  }
+  // Load environment variables
+  await dotenv.load(fileName: ".env");
 
-  await PermissionService.requestPermissions();
+  // Initialize Firebase
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(
-    ProviderScope(
-      overrides: [
-        firebaseInitializedProvider.overrideWithValue(firebaseInitialized),
-      ],
-      child: const MendApp(),
-    ),
-  );
+  runApp(const MendApp());
 }
 
-final firebaseInitializedProvider = Provider<bool>((ref) => false);
-
-class MendApp extends ConsumerWidget {
+class MendApp extends StatelessWidget {
   const MendApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(appRouterProvider);
-
-    return MaterialApp.router(
-      title: 'Mend AI',
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      routerConfig: router,
-      debugShowCheckedModeBanner: false,
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => FirebaseAppState()..initialize(),
+      child: ScreenUtilInit(
+        designSize: const Size(375, 812),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return MaterialApp(
+            title: 'Mend',
+            theme: AppTheme.lightThemeData,
+            darkTheme: AppTheme.themeData,
+            themeMode: ThemeMode.dark,
+            home: const SplashScreen(),
+            debugShowCheckedModeBanner: false,
+            builder: (context, child) => AuroraBackground(
+              intensity: 0.55,
+              child: child ?? const SizedBox.shrink(),
+            ),
+          );
+        },
+      ),
     );
   }
 }

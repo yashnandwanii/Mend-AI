@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Mend Ai</string>
+	<string>Mend</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>mend_ai</string>
+	<string>Mend</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -45,9 +45,15 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	
+	<!-- Microphone permission for voice recording and speech recognition -->
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This app needs access to microphone for voice communication sessions to help improve your relationship through AI-guided conversations.</string>
+	<string>This app needs access to microphone for voice therapy sessions</string>
+	
+	<!-- Speech recognition permission -->
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>This app uses speech recognition to transcribe your conversations and provide AI-powered relationship insights.</string>
+	<string>Mend uses speech recognition to convert your voice to text during conversations, helping the AI therapist provide better guidance.</string>
+	<key>GIDClientID</key>
+	<string>571931343862-dq7k0r1e210hhooabg5fbquj76ku9euu.apps.googleusercontent.com</string>
 </dict>
 </plist>

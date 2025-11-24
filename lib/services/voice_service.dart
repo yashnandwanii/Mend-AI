@@ -2,6 +2,7 @@
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:math';
 
@@ -32,90 +33,90 @@ class VoiceService {
     _speechToText = SpeechToText();
     _flutterTts = FlutterTts();
 
-    print('🎤 Initializing VoiceService...');
+    debugPrint('🎤 Initializing VoiceService...');
 
     // Check current microphone permission status
     final currentStatus = await Permission.microphone.status;
-    print('🔐 Current microphone permission status: $currentStatus');
+    debugPrint('🔐 Current microphone permission status: $currentStatus');
 
     PermissionStatus permissionStatus;
 
     if (currentStatus == PermissionStatus.granted) {
-      print('✅ Microphone permission already granted');
+      debugPrint('✅ Microphone permission already granted');
       permissionStatus = currentStatus;
     } else if (currentStatus == PermissionStatus.permanentlyDenied) {
-      print('❌ Microphone permission permanently denied');
-      print(
+      debugPrint('❌ Microphone permission permanently denied');
+      debugPrint(
         '🔧 Microphone permission permanently denied. You can open app settings to enable the permission.',
       );
       // Try to open app settings programmatically.
       final opened = await openAppSettingsFromCode();
       if (!opened) {
-        print(
+        debugPrint(
           '❌ Failed to open app settings programmatically. Please open Settings manually.',
         );
       }
       _speechEnabled = false;
       return;
     } else {
-      print('🔐 Requesting microphone permission...');
+      debugPrint('🔐 Requesting microphone permission...');
       permissionStatus = await Permission.microphone.request();
     }
 
     if (permissionStatus != PermissionStatus.granted) {
-      print('❌ Microphone permission denied - Status: $permissionStatus');
+      debugPrint('❌ Microphone permission denied - Status: $permissionStatus');
       if (permissionStatus == PermissionStatus.permanentlyDenied) {
-        print('🔧 Permission permanently denied. Please:');
-        print('   1. Go to iOS Settings > Privacy & Security > Microphone');
-        print('   2. Enable microphone access for Mend AI');
-        print('   3. Or reset simulator: xcrun simctl erase all');
+        debugPrint('🔧 Permission permanently denied. Please:');
+        debugPrint('   1. Go to iOS Settings > Privacy & Security > Microphone');
+        debugPrint('   2. Enable microphone access for Mend AI');
+        debugPrint('   3. Or reset simulator: xcrun simctl erase all');
         // Try to open app settings as a last resort
         final opened = await openAppSettingsFromCode();
         if (!opened) {
-          print('❌ Could not open App Settings. Please open them manually.');
+          debugPrint('❌ Could not open App Settings. Please open them manually.');
         }
       } else {
-        print('🔧 Please enable microphone access when prompted');
+        debugPrint('🔧 Please enable microphone access when prompted');
       }
       _speechEnabled = false;
       return;
     }
 
-    print('✅ Microphone permission granted successfully');
+    debugPrint('✅ Microphone permission granted successfully');
 
     // Request speech recognition permission (iOS specific)
     final speechPermission = await Permission.speech.request();
     if (speechPermission != PermissionStatus.granted) {
-      print(
+      debugPrint(
         '❌ Speech recognition permission denied - Status: $speechPermission',
       );
     } else {
-      print('✅ Speech recognition permission granted');
+      debugPrint('✅ Speech recognition permission granted');
     }
 
     // Initialize speech-to-text
-    print('🔄 Initializing speech recognition engine...');
+    debugPrint('🔄 Initializing speech recognition engine...');
     _speechEnabled = await _speechToText.initialize(
       onError: (errorNotification) {
-        print('❌ Speech recognition error: ${errorNotification.errorMsg}');
-        print('🔧 Permanent error: ${errorNotification.permanent}');
+        debugPrint('❌ Speech recognition error: ${errorNotification.errorMsg}');
+        debugPrint('🔧 Permanent error: ${errorNotification.permanent}');
         _speechEnabled = false;
       },
       onStatus: (status) {
-        print('🔄 Speech recognition status: $status');
+        debugPrint('🔄 Speech recognition status: $status');
       },
     );
 
     if (_speechEnabled) {
-      print('✅ VoiceService initialized with REAL speech recognition');
+      debugPrint('✅ VoiceService initialized with REAL speech recognition');
       final locales = await _speechToText.locales();
-      print('� Available locales: ${locales.length}');
+      debugPrint('� Available locales: ${locales.length}');
       for (var locale in locales.take(3)) {
-        print('  📍 ${locale.localeId}: ${locale.name}');
+        debugPrint('  📍 ${locale.localeId}: ${locale.name}');
       }
     } else {
-      print('❌ Speech recognition initialization failed - using mock mode');
-      print('🔧 Check device microphone and permissions');
+      debugPrint('❌ Speech recognition initialization failed - using mock mode');
+      debugPrint('🔧 Check device microphone and permissions');
     }
 
     // Initialize TTS
@@ -124,7 +125,7 @@ class VoiceService {
     await _flutterTts.setVolume(1.0);
     await _flutterTts.setPitch(1.0);
 
-    print('🔊 Text-to-Speech initialized');
+    debugPrint('🔊 Text-to-Speech initialized');
   }
 
   /// Attempts to open the system app settings so the user can enable permissions.
@@ -132,10 +133,10 @@ class VoiceService {
   Future<bool> openAppSettingsFromCode() async {
     try {
       final opened = await openAppSettings();
-      print('🔑 openAppSettings result: $opened');
+      debugPrint('🔑 openAppSettings result: $opened');
       return opened;
     } catch (e) {
-      print('❌ Error opening app settings: $e');
+      debugPrint('❌ Error opening app settings: $e');
       return false;
     }
   }
@@ -149,30 +150,30 @@ class VoiceService {
     _currentSpeaker = speaker;
     _isListening = true;
 
-    print('🎤 Starting REAL speech recognition for $speaker');
-    print('📊 Audio input stream: ACTIVE');
-    print(
+    debugPrint('🎤 Starting REAL speech recognition for $speaker');
+    debugPrint('📊 Audio input stream: ACTIVE');
+    debugPrint(
       '🔍 Voice recognition mode: ${speaker.contains('A') ? 'MALE_VOICE' : 'FEMALE_VOICE'}',
     );
 
     if (_speechEnabled && _speechToText.isAvailable) {
       // Use REAL speech recognition
-      print('🎙️ Starting REAL speech recognition engine...');
+      debugPrint('🎙️ Starting REAL speech recognition engine...');
       await _speechToText.listen(
         onResult: (result) {
           if (result.recognizedWords.isNotEmpty) {
             String transcript = result.recognizedWords;
-            print('');
-            print('════════════════════════════════════════');
-            print('🗣️ [$speaker] SPEECH-TO-TEXT RESULT:');
-            print('📝 Text: "$transcript"');
-            print(
+            debugPrint('');
+            debugPrint('════════════════════════════════════════');
+            debugPrint('🗣️ [$speaker] SPEECH-TO-TEXT RESULT:');
+            debugPrint('📝 Text: "$transcript"');
+            debugPrint(
               '� Confidence: ${(result.confidence * 100).toStringAsFixed(1)}%',
             );
-            print('🔄 Is Final: ${result.finalResult}');
-            print('⏱️ Timestamp: ${DateTime.now().toString().split(' ')[1]}');
-            print('════════════════════════════════════════');
-            print('');
+            debugPrint('🔄 Is Final: ${result.finalResult}');
+            debugPrint('⏱️ Timestamp: ${DateTime.now().toString().split(' ')[1]}');
+            debugPrint('════════════════════════════════════════');
+            debugPrint('');
 
             onResult(transcript);
             _transcriptController.add('$speaker: $transcript');
@@ -185,7 +186,7 @@ class VoiceService {
         onSoundLevelChange: (level) {
           // Show sound level every few seconds to avoid spam
           if (level > 0.5) {
-            print(
+            debugPrint(
               '🔊 Audio Level: ${level.toStringAsFixed(1)}dB - Speaking detected',
             );
           }
@@ -193,8 +194,8 @@ class VoiceService {
       );
     } else {
       // Fallback to enhanced mock mode
-      print('⚠️ Using enhanced mock mode - speech recognition not available');
-      print(
+      debugPrint('⚠️ Using enhanced mock mode - speech recognition not available');
+      debugPrint(
         '🔧 Reason: Speech recognition ${_speechEnabled ? 'available but not ready' : 'disabled'}',
       );
       _startMockListening(onResult, speaker);
@@ -203,14 +204,14 @@ class VoiceService {
     // Simulate audio input feedback
     _listeningController.add(true);
     _speakerController.add(speaker);
-    print('✅ Audio capture initialized for $speaker');
+    debugPrint('✅ Audio capture initialized for $speaker');
   }
 
   void _startMockListening(Function(String) onResult, String speaker) {
     // Enhanced mock transcript simulation with more realistic timing
     _mockTimer = Timer.periodic(const Duration(milliseconds: 2000), (timer) {
       if (!_isListening) {
-        print('⏹️ Audio input stream: STOPPED');
+        debugPrint('⏹️ Audio input stream: STOPPED');
         timer.cancel();
         return;
       }
@@ -230,16 +231,16 @@ class VoiceService {
       String mockTranscript = mockPhrases[Random().nextInt(mockPhrases.length)];
 
       // Enhanced debug logging for mock mode
-      print('');
-      print('════════════════════════════════════════');
-      print('🤖 [$speaker] MOCK SPEECH-TO-TEXT:');
-      print('📝 Text: "$mockTranscript"');
-      print('� Confidence: ${85 + Random().nextInt(15)}%');
-      print('🔄 Is Final: true');
-      print('⏱️ Timestamp: ${DateTime.now().toString().split(' ')[1]}');
-      print('🎚️ Audio Level: ${60 + Random().nextInt(40)}dB');
-      print('════════════════════════════════════════');
-      print('');
+      debugPrint('');
+      debugPrint('════════════════════════════════════════');
+      debugPrint('🤖 [$speaker] MOCK SPEECH-TO-TEXT:');
+      debugPrint('📝 Text: "$mockTranscript"');
+      debugPrint('� Confidence: ${85 + Random().nextInt(15)}%');
+      debugPrint('🔄 Is Final: true');
+      debugPrint('⏱️ Timestamp: ${DateTime.now().toString().split(' ')[1]}');
+      debugPrint('🎚️ Audio Level: ${60 + Random().nextInt(40)}dB');
+      debugPrint('════════════════════════════════════════');
+      debugPrint('');
 
       onResult(mockTranscript);
       _transcriptController.add('$speaker: $mockTranscript');
@@ -247,15 +248,15 @@ class VoiceService {
   }
 
   Future<void> stopListening() async {
-    print('🛑 Stopping speech recognition for $_currentSpeaker');
-    print('📊 Audio input stream: DEACTIVATED');
+    debugPrint('🛑 Stopping speech recognition for $_currentSpeaker');
+    debugPrint('📊 Audio input stream: DEACTIVATED');
 
     _isListening = false;
 
     // Stop real speech recognition
     if (_speechEnabled && _speechToText.isListening) {
       await _speechToText.stop();
-      print('✅ Real speech recognition stopped');
+      debugPrint('✅ Real speech recognition stopped');
     }
 
     // Stop mock timer
@@ -266,14 +267,14 @@ class VoiceService {
     _listeningController.add(false);
     _speakerController.add('');
 
-    print('✅ Audio capture terminated - ready for next speaker');
+    debugPrint('✅ Audio capture terminated - ready for next speaker');
   }
 
   Future<void> speak(String text) async {
     try {
       await _flutterTts.speak(text);
     } catch (e) {
-      print('TTS Error: $e');
+      debugPrint('TTS Error: $e');
     }
   }
 

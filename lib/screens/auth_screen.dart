@@ -160,7 +160,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
                                     : 'Join Mend and transform your relationship',
                                 style: TextStyle(
                                   fontSize: 18,
-                                  color: Colors.white.withOpacity(0.8),
+                                  color: Colors.white.withValues(alpha: 0.8),
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 0.5,
                                 ),
@@ -236,7 +236,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
                                       border: Border.all(
                                         color: const Color(
                                           0xFF6366F1,
-                                        ).withOpacity(0.3),
+                                        ).withValues(alpha: 0.3),
                                       ),
                                     ),
                                     child: Text(
@@ -244,7 +244,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
                                           ? 'Don\'t have an account? Create one'
                                           : 'Already have an account? Sign in',
                                       style: TextStyle(
-                                        color: Colors.white.withOpacity(0.8),
+                                        color: Colors.white.withValues(alpha: 0.8),
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
                                         letterSpacing: 0.3,
@@ -262,7 +262,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
                                   'Your data is encrypted and secure',
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: Colors.white.withOpacity(0.5),
+                                    color: Colors.white.withValues(alpha: 0.5),
                                     letterSpacing: 0.3,
                                   ),
                                 ),
@@ -296,14 +296,14 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
         borderRadius: BorderRadius.circular(16),
         gradient: LinearGradient(
           colors: [
-            const Color(0xFF1A1A1A).withOpacity(0.8),
-            const Color(0xFF111111).withOpacity(0.9),
+            const Color(0xFF1A1A1A).withValues(alpha: 0.8),
+            const Color(0xFF111111).withValues(alpha: 0.9),
           ],
         ),
-        border: Border.all(color: const Color(0xFF6366F1).withOpacity(0.2)),
+        border: Border.all(color: const Color(0xFF6366F1).withValues(alpha: 0.2)),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF6366F1).withOpacity(0.1),
+            color: const Color(0xFF6366F1).withValues(alpha: 0.1),
             blurRadius: 20,
             spreadRadius: 1,
           ),
@@ -322,7 +322,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
         decoration: InputDecoration(
           labelText: label,
           labelStyle: TextStyle(
-            color: Colors.white.withOpacity(0.7),
+            color: Colors.white.withValues(alpha: 0.7),
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),

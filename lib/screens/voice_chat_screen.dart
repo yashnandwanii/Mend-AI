@@ -109,14 +109,14 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
     final micPermission = await Permission.microphone.status;
 
     if (micPermission != PermissionStatus.granted) {
-      print('🔐 Microphone permission needed - showing dialog');
+      debugPrint('🔐 Microphone permission needed - showing dialog');
       if (micPermission == PermissionStatus.permanentlyDenied) {
         _showSettingsDialog();
       } else {
         _showPermissionDialog();
       }
     } else {
-      print('✅ Microphone permission already granted');
+      debugPrint('✅ Microphone permission already granted');
     }
   }
 
@@ -148,7 +148,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
             onPressed: () async {
               Navigator.of(context).pop();
               final result = await Permission.microphone.request();
-              print('🔐 Permission request result: $result');
+              debugPrint('🔐 Permission request result: $result');
 
               if (result == PermissionStatus.granted) {
                 await Permission.speech.request();
@@ -278,9 +278,9 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
       return;
     }
 
-    print('\n🎤 ===== STARTING RECORDING =====');
-    print('🔴 User tapped "Tap to Speak" button');
-    print('⏰ Time: ${DateTime.now().toString().split(' ')[1]}');
+    debugPrint('\n🎤 ===== STARTING RECORDING =====');
+    debugPrint('🔴 User tapped "Tap to Speak" button');
+    debugPrint('⏰ Time: ${DateTime.now().toString().split(' ')[1]}');
 
     setState(() {
       _isRecording = true;
@@ -296,24 +296,24 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
     // Get current user for this device
     final currentUser = ref.read(currentUserProvider).value;
     if (currentUser == null) {
-      print('❌ No current user found');
+      debugPrint('❌ No current user found');
       return;
     }
 
     String currentSpeakerId = currentUser.email ?? 'user';
-    print('👤 Recording for user: $currentSpeakerId');
+    debugPrint('👤 Recording for user: $currentSpeakerId');
 
     // Start voice service
     final voiceNotifier = ref.read(voiceNotifierProvider.notifier);
     await voiceNotifier.startListening(currentSpeakerId);
 
-    print('✅ Voice service started - listening for audio input');
+    debugPrint('✅ Voice service started - listening for audio input');
   }
 
   Future<void> _stopRecording() async {
-    print('\n🛑 ===== STOPPING RECORDING =====');
-    print('🔴 User tapped button again to stop recording');
-    print('⏰ Time: ${DateTime.now().toString().split(' ')[1]}');
+    debugPrint('\n🛑 ===== STOPPING RECORDING =====');
+    debugPrint('🔴 User tapped button again to stop recording');
+    debugPrint('⏰ Time: ${DateTime.now().toString().split(' ')[1]}');
 
     setState(() {
       _isRecording = false;
@@ -333,22 +333,22 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
     final voiceState = ref.read(voiceNotifierProvider);
     if (voiceState.transcript.isNotEmpty) {
       String latestTranscript = voiceState.transcript.last;
-      print('\n📝 ===== SPEECH-TO-TEXT RESULT =====');
-      print('🗣️ Raw Audio Input Converted To Text:');
-      print('📄 "$latestTranscript"');
-      print('📊 Word Count: ${latestTranscript.split(' ').length}');
-      print('🎯 Character Count: ${latestTranscript.length}');
-      print('⚡ Processing Complete');
-      print('=====================================\n');
+      debugPrint('\n📝 ===== SPEECH-TO-TEXT RESULT =====');
+      debugPrint('🗣️ Raw Audio Input Converted To Text:');
+      debugPrint('📄 "$latestTranscript"');
+      debugPrint('📊 Word Count: ${latestTranscript.split(' ').length}');
+      debugPrint('🎯 Character Count: ${latestTranscript.length}');
+      debugPrint('⚡ Processing Complete');
+      debugPrint('=====================================\n');
 
       setState(() {
         _currentTranscript = latestTranscript;
       });
     } else {
-      print('❌ No speech detected during recording session');
+      debugPrint('❌ No speech detected during recording session');
     }
 
-    print('✅ Recording session ended successfully');
+    debugPrint('✅ Recording session ended successfully');
   }
 
   void _pauseSession() {
@@ -362,11 +362,11 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
       }
       _sessionTimer?.cancel();
       _showMessage('Session paused');
-      print('⏸️ Session paused');
+      debugPrint('⏸️ Session paused');
     } else {
       _startSessionTimer();
       _showMessage('Session resumed');
-      print('▶️ Session resumed');
+      debugPrint('▶️ Session resumed');
     }
 
     HapticFeedback.mediumImpact();
@@ -382,17 +382,17 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
     );
   }
 
-  void _handleInterruption() async {
-    // Flash haptic feedback
-    HapticFeedback.heavyImpact();
+  // void _handleInterruption() async {
+  //   // Flash haptic feedback
+  //   HapticFeedback.heavyImpact();
 
-    _showMessage('Please let your partner finish speaking');
+  //   _showMessage('Please let your partner finish speaking');
 
-    final voiceNotifier = ref.read(voiceNotifierProvider.notifier);
-    await voiceNotifier.speakInterruptionWarning();
+  //   final voiceNotifier = ref.read(voiceNotifierProvider.notifier);
+  //   await voiceNotifier.speakInterruptionWarning();
 
-    print('❌ Interruption detected - blocking concurrent speech');
-  }
+  //   debugPrint('❌ Interruption detected - blocking concurrent speech');
+  // }
 
   void _endSession() async {
     if (_currentSession == null) return;
@@ -454,12 +454,12 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
         width: double.infinity,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppTheme.charcoal.withOpacity(0.4),
+          color: AppTheme.charcoal.withValues(alpha: 0.4),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: _isRecording
-                ? AppTheme.accentColor.withOpacity(0.3)
-                : AppTheme.lightGray.withOpacity(0.1),
+                ? AppTheme.accentColor.withValues(alpha: 0.3)
+                : AppTheme.lightGray.withValues(alpha: 0.1),
             width: 1,
           ),
         ),
@@ -472,8 +472,8 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                     color: _isRecording
-                        ? AppTheme.accentColor.withOpacity(0.2)
-                        : AppTheme.lightGray.withOpacity(0.1),
+                        ? AppTheme.accentColor.withValues(alpha: 0.2)
+                        : AppTheme.lightGray.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
@@ -523,7 +523,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                     style: TextStyle(
                       color: _currentTranscript.isNotEmpty
                           ? Colors.white
-                          : AppTheme.lightGray.withOpacity(0.6),
+                          : AppTheme.lightGray.withValues(alpha: 0.6),
                       fontSize: 14,
                       height: 1.4,
                       fontStyle: _currentTranscript.isNotEmpty
@@ -594,7 +594,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
             decoration: BoxDecoration(
               color: _isPaused
                   ? AppTheme.accentColor
-                  : AppTheme.lightGray.withOpacity(0.2),
+                  : AppTheme.lightGray.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: IconButton(
@@ -610,7 +610,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
           Container(
             margin: const EdgeInsets.only(right: 16),
             decoration: BoxDecoration(
-              color: Colors.red.withOpacity(0.2),
+              color: Colors.red.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: IconButton(
@@ -643,15 +643,15 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: AppTheme.charcoal.withOpacity(0.3),
+                      color: AppTheme.charcoal.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: AppTheme.primaryColor.withOpacity(0.3),
+                        color: AppTheme.primaryColor.withValues(alpha: 0.3),
                         width: 1,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AppTheme.primaryColor.withOpacity(0.1),
+                          color: AppTheme.primaryColor.withValues(alpha: 0.1),
                           blurRadius: 20,
                           offset: const Offset(0, 10),
                         ),
@@ -664,7 +664,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                             Container(
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
-                                color: AppTheme.primaryColor.withOpacity(0.2),
+                                color: AppTheme.primaryColor.withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Icon(
@@ -718,7 +718,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                                   _waveformAnimation.value,
                                   AppTheme.accentColor,
                                 ),
-                                child: Container(
+                                child: SizedBox(
                                   width: double.infinity,
                                   height: 120,
                                 ),
@@ -739,10 +739,10 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                               vertical: 8,
                             ),
                             decoration: BoxDecoration(
-                              color: AppTheme.primaryColor.withOpacity(0.2),
+                              color: AppTheme.primaryColor.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
-                                color: AppTheme.primaryColor.withOpacity(0.3),
+                                color: AppTheme.primaryColor.withValues(alpha: 0.3),
                                 width: 1,
                               ),
                             ),
@@ -790,10 +790,10 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                             vertical: 12,
                           ),
                           decoration: BoxDecoration(
-                            color: AppTheme.accentColor.withOpacity(0.2),
+                            color: AppTheme.accentColor.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(25),
                             border: Border.all(
-                              color: AppTheme.accentColor.withOpacity(0.5),
+                              color: AppTheme.accentColor.withValues(alpha: 0.5),
                               width: 1,
                             ),
                           ),
@@ -830,10 +830,10 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                     height: 120,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: AppTheme.charcoal.withOpacity(0.3),
+                      color: AppTheme.charcoal.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: AppTheme.lightGray.withOpacity(0.1),
+                        color: AppTheme.lightGray.withValues(alpha: 0.1),
                         width: 1,
                       ),
                     ),
@@ -917,21 +917,21 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
               height: 180,
               decoration: BoxDecoration(
                 color: _isRecording
-                    ? AppTheme.accentColor.withOpacity(0.1)
-                    : AppTheme.charcoal.withOpacity(0.8),
+                    ? AppTheme.accentColor.withValues(alpha: 0.1)
+                    : AppTheme.charcoal.withValues(alpha: 0.8),
                 shape: BoxShape.circle,
                 border: Border.all(
                   color: _isRecording
                       ? AppTheme.accentColor
-                      : AppTheme.lightGray.withOpacity(0.3),
+                      : AppTheme.lightGray.withValues(alpha: 0.3),
                   width: _isRecording ? 4 : 2,
                 ),
                 boxShadow: [
                   if (_isRecording) ...[
                     // Animated border glow effect
                     BoxShadow(
-                      color: AppTheme.accentColor.withOpacity(
-                        0.4 + (_borderAnimation.value * 0.3),
+                      color: AppTheme.accentColor.withValues(
+                        alpha: 0.4 + (_borderAnimation.value * 0.3),
                       ),
                       blurRadius: 30 + (_borderAnimation.value * 20),
                       spreadRadius: 8 + (_borderAnimation.value * 8),
@@ -939,8 +939,8 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                     ),
                     // Pulse effect
                     BoxShadow(
-                      color: AppTheme.accentColor.withOpacity(
-                        0.6 + (_pulseAnimation.value * 0.2),
+                      color: AppTheme.accentColor.withValues(
+                        alpha: 0.6 + (_pulseAnimation.value * 0.2),
                       ),
                       blurRadius: 15 + (_pulseAnimation.value * 10),
                       spreadRadius: 3 + (_pulseAnimation.value * 5),
@@ -948,7 +948,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                     ),
                   ] else ...[
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
+                      color: Colors.black.withValues(alpha: 0.3),
                       blurRadius: 15,
                       offset: const Offset(0, 8),
                     ),
@@ -964,8 +964,8 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: _isRecording
-                          ? AppTheme.accentColor.withOpacity(
-                              0.2 + (_pulseAnimation.value * 0.1),
+                          ? AppTheme.accentColor.withValues(
+                              alpha: 0.2 + (_pulseAnimation.value * 0.1),
                             )
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(25),
@@ -1008,8 +1008,8 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                       currentUser.email?.split('@')[0] ?? 'User',
                       style: TextStyle(
                         color: _isRecording
-                            ? AppTheme.accentColor.withOpacity(0.8)
-                            : AppTheme.lightGray.withOpacity(0.6),
+                            ? AppTheme.accentColor.withValues(alpha: 0.8)
+                            : AppTheme.lightGray.withValues(alpha: 0.6),
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                       ),
@@ -1059,7 +1059,7 @@ class WaveformPainter extends CustomPainter {
 
     // Add glow effect
     final glowPaint = Paint()
-      ..color = waveColor.withOpacity(0.3)
+      ..color = waveColor.withValues(alpha: 0.3)
       ..strokeWidth = 6
       ..style = PaintingStyle.stroke
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);

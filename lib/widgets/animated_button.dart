@@ -122,21 +122,21 @@ class _AnimatedButtonState extends State<AnimatedButton>
             decoration: BoxDecoration(
               borderRadius: widget.borderRadius ?? BorderRadius.circular(16),
               gradient: LinearGradient(
-                colors: [backgroundColor, backgroundColor.withOpacity(0.8)],
+                colors: [backgroundColor, backgroundColor.withValues(alpha: 0.8)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               boxShadow: [
                 // Main shadow
                 BoxShadow(
-                  color: backgroundColor.withOpacity(0.3),
+                  color: backgroundColor.withValues(alpha: 0.3),
                   blurRadius: 20,
                   offset: const Offset(0, 8),
                 ),
                 // Glow effect
                 BoxShadow(
-                  color: backgroundColor.withOpacity(
-                    _glowAnimation.value * 0.4,
+                  color: backgroundColor.withValues(
+                    alpha: _glowAnimation.value * 0.4,
                   ),
                   blurRadius: 30,
                   spreadRadius: _glowAnimation.value * 2,
@@ -168,7 +168,7 @@ class _AnimatedButtonState extends State<AnimatedButton>
                                 gradient: LinearGradient(
                                   colors: [
                                     Colors.transparent,
-                                    Colors.white.withOpacity(0.1),
+                                    Colors.white.withValues(alpha: 0.1),
                                     Colors.transparent,
                                   ],
                                   stops: const [0.0, 0.5, 1.0],

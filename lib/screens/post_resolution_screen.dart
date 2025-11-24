@@ -110,9 +110,11 @@ class _PostResolutionScreenState extends ConsumerState<PostResolutionScreen>
         context.go('/home');
       }
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error saving reflection: $e')));
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error saving reflection: $e')));
+      }
     } finally {
       setState(() {
         _isLoading = false;

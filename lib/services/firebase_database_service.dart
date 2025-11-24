@@ -1,5 +1,6 @@
 // File: lib/services/firebase_database_service.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 import '../models/relationship_model.dart';
 import '../models/session_model.dart';
@@ -29,7 +30,7 @@ class FirebaseDatabaseService {
           .set(relationship.toMap());
       return relationship;
     } catch (e) {
-      print('Error creating relationship: $e');
+      debugPrint('Error creating relationship: $e');
       rethrow;
     }
   }
@@ -64,7 +65,7 @@ class FirebaseDatabaseService {
       }
       return null;
     } catch (e) {
-      print('Error joining relationship: $e');
+      debugPrint('Error joining relationship: $e');
       return null;
     }
   }
@@ -95,7 +96,7 @@ class FirebaseDatabaseService {
 
       return null;
     } catch (e) {
-      print('Error getting relationship: $e');
+      debugPrint('Error getting relationship: $e');
       return null;
     }
   }
@@ -121,7 +122,7 @@ class FirebaseDatabaseService {
           .set(session.toMap());
       return session;
     } catch (e) {
-      print('Error creating session: $e');
+      debugPrint('Error creating session: $e');
       rethrow;
     }
   }
@@ -133,7 +134,7 @@ class FirebaseDatabaseService {
           .doc(session.id)
           .update(session.toMap());
     } catch (e) {
-      print('Error updating session: $e');
+      debugPrint('Error updating session: $e');
       rethrow;
     }
   }
@@ -150,7 +151,7 @@ class FirebaseDatabaseService {
 
       return query.docs.map((doc) => SessionModel.fromFirestore(doc)).toList();
     } catch (e) {
-      print('Error getting sessions: $e');
+      debugPrint('Error getting sessions: $e');
       return [];
     }
   }
@@ -163,7 +164,7 @@ class FirebaseDatabaseService {
           .doc(reflection.id)
           .set(reflection.toMap());
     } catch (e) {
-      print('Error saving reflection: $e');
+      debugPrint('Error saving reflection: $e');
       rethrow;
     }
   }
@@ -180,7 +181,7 @@ class FirebaseDatabaseService {
           .map((doc) => ReflectionModel.fromFirestore(doc))
           .toList();
     } catch (e) {
-      print('Error getting reflections: $e');
+      debugPrint('Error getting reflections: $e');
       return [];
     }
   }

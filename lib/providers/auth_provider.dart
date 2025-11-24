@@ -1,4 +1,5 @@
 // File: lib/providers/auth_provider.dart
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/firebase_auth_service.dart';
@@ -39,10 +40,11 @@ class AuthNotifier extends StateNotifier<AsyncValue<User?>> {
     state = const AsyncValue.loading();
     try {
       final result = await _authService.signInWithEmail(email, password);
-      if (result != null) {
-        state = AsyncValue.data(result.user);
+      if (result.userCredential != null) {
+        state = AsyncValue.data(result.userCredential!.user);
       } else {
-        state = const AsyncValue.error('Failed to sign in', StackTrace.empty);
+        state = AsyncValue.error(
+            result.errorMessage ?? 'Failed to sign in', StackTrace.empty);
       }
     } catch (e, stack) {
       state = AsyncValue.error(e, stack);
@@ -53,8 +55,8 @@ class AuthNotifier extends StateNotifier<AsyncValue<User?>> {
     state = const AsyncValue.loading();
     try {
       final result = await _authService.createAccount(email, password);
-      if (result != null) {
-        state = AsyncValue.data(result.user);
+      if (result.userCredential != null) {
+        state = AsyncValue.data(result.userCredential!.user);
       } else {
         state = const AsyncValue.error(
           'Failed to create account',
@@ -80,7 +82,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<User?>> {
       await _authService.createUserProfile(user);
     } catch (e) {
       // Handle error
-      print('Error creating user profile: $e');
+      foundation.debugPrint('Error creating user profile: $e');
     }
   }
 
@@ -89,7 +91,7 @@ class AuthNotifier extends StateNotifier<AsyncValue<User?>> {
       await _authService.updateUserProfile(user);
     } catch (e) {
       // Handle error
-      print('Error updating user profile: $e');
+      foundation.debugPrint('Error updating user profile: $e');
     }
   }
 }

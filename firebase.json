@@ -1,1 +1,33 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"mend-ai-616af","appId":"1:867447335283:android:b915317252461702cafd06","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"mend-ai-616af","appId":"1:867447335283:ios:b1257ba27f4ba959cafd06","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"mend-ai-616af","configurations":{"android":"1:867447335283:android:b915317252461702cafd06","ios":"1:867447335283:ios:b1257ba27f4ba959cafd06"}}},"macos":{"default":{"projectId":"mend-ai-616af","appId":"1:867447335283:ios:b1257ba27f4ba959cafd06","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}}}}}
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "mend-ai-616af",
+          "appId": "1:867447335283:android:b915317252461702cafd06",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "mend-ai-616af",
+          "appId": "1:867447335283:ios:b1257ba27f4ba959cafd06",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "mend-ai-616af",
+          "configurations": {
+            "android": "1:867447335283:android:b915317252461702cafd06",
+            "ios": "1:867447335283:ios:b1257ba27f4ba959cafd06"
+          }
+        }
+      }
+    }
+  }
+}

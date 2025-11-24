@@ -373,9 +373,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: color.withOpacity(0.3)),
+          border: Border.all(color: color.withValues(alpha: 0.3)),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -395,7 +395,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               subtitle,
               style: Theme.of(
                 context,
-              ).textTheme.bodySmall?.copyWith(color: color.withOpacity(0.8)),
+              ).textTheme.bodySmall?.copyWith(color: color.withValues(alpha: 0.8)),
               textAlign: TextAlign.center,
             ),
           ],

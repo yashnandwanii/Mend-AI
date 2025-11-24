@@ -156,7 +156,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen>
                                                 BoxShadow(
                                                   color: const Color(
                                                     0xFF6366F1,
-                                                  ).withOpacity(0.5),
+                                                  ).withValues(alpha: 0.5),
                                                   blurRadius: 40,
                                                   spreadRadius: 8,
                                                 ),
@@ -197,8 +197,8 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen>
                                             'AI-Powered Relationship Companion',
                                             style: TextStyle(
                                               fontSize: 18,
-                                              color: Colors.white.withOpacity(
-                                                0.8,
+                                              color: Colors.white.withValues(
+                                                alpha: 0.8,
                                               ),
                                               fontWeight: FontWeight.w500,
                                               letterSpacing: 1,
@@ -272,7 +272,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen>
                                       'By continuing, you agree to our Terms & Privacy Policy',
                                       style: TextStyle(
                                         fontSize: 13,
-                                        color: Colors.white.withOpacity(0.6),
+                                        color: Colors.white.withValues(alpha: 0.6),
                                         letterSpacing: 0.3,
                                       ),
                                       textAlign: TextAlign.center,
@@ -321,15 +321,15 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen>
             child: Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: const Color(0xFF1A1A1A).withOpacity(0.8),
+                color: const Color(0xFF1A1A1A).withValues(alpha: 0.8),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: const Color(0xFF6366F1).withOpacity(0.2),
+                  color: const Color(0xFF6366F1).withValues(alpha: 0.2),
                   width: 1,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF6366F1).withOpacity(0.1),
+                    color: const Color(0xFF6366F1).withValues(alpha: 0.1),
                     blurRadius: 20,
                     spreadRadius: 2,
                   ),
@@ -347,7 +347,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen>
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF6366F1).withOpacity(0.3),
+                          color: const Color(0xFF6366F1).withValues(alpha: 0.3),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),
@@ -374,7 +374,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen>
                           description,
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.white.withOpacity(0.7),
+                            color: Colors.white.withValues(alpha: 0.7),
                             letterSpacing: 0.2,
                           ),
                         ),

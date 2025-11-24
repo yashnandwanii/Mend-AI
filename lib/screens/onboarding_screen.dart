@@ -364,7 +364,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       color: isSelected
                           ? Theme.of(
                               context,
-                            ).colorScheme.primary.withOpacity(0.1)
+                            ).colorScheme.primary.withValues(alpha: 0.1)
                           : Colors.grey.shade50,
                       border: Border.all(
                         color: isSelected

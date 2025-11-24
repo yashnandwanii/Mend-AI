@@ -72,14 +72,14 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
     final micPermission = await Permission.microphone.status;
 
     if (micPermission != PermissionStatus.granted) {
-      print('🔐 Microphone permission needed - showing dialog');
+      debugPrint('🔐 Microphone permission needed - showing dialog');
       if (micPermission == PermissionStatus.permanentlyDenied) {
         _showSettingsDialog();
       } else {
         _showPermissionDialog();
       }
     } else {
-      print('✅ Microphone permission already granted');
+      debugPrint('✅ Microphone permission already granted');
     }
   }
 
@@ -111,7 +111,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
             onPressed: () async {
               Navigator.of(context).pop();
               final result = await Permission.microphone.request();
-              print('🔐 Permission request result: $result');
+              debugPrint('🔐 Permission request result: $result');
 
               if (result == PermissionStatus.granted) {
                 await Permission.speech.request();
@@ -239,8 +239,8 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
     _pulseController.repeat(reverse: true);
 
     // Debug print for audio input
-    print('🎤 Started listening for current user: $currentSpeakerId');
-    print('🔊 Audio input enabled for this device');
+    debugPrint('🎤 Started listening for current user: $currentSpeakerId');
+    debugPrint('🔊 Audio input enabled for this device');
   }
 
   void _stopListening() async {
@@ -254,7 +254,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
     // Add haptic feedback
     HapticFeedback.lightImpact();
 
-    print('🛑 Stopped listening - ready for next input');
+    debugPrint('🛑 Stopped listening - ready for next input');
   }
 
   void _pauseSession() {
@@ -266,11 +266,11 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
       _stopListening();
       _sessionTimer?.cancel();
       _showMessage('Session paused');
-      print('⏸️ Session paused');
+      debugPrint('⏸️ Session paused');
     } else {
       _startSessionTimer();
       _showMessage('Session resumed');
-      print('▶️ Session resumed');
+      debugPrint('▶️ Session resumed');
     }
 
     HapticFeedback.mediumImpact();
@@ -295,7 +295,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
     final voiceNotifier = ref.read(voiceNotifierProvider.notifier);
     await voiceNotifier.speakInterruptionWarning();
 
-    print('❌ Interruption detected - blocking concurrent speech');
+    debugPrint('❌ Interruption detected - blocking concurrent speech');
   }
 
   void _endSession() async {
@@ -399,7 +399,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
             decoration: BoxDecoration(
               color: _isPaused
                   ? AppTheme.accentColor
-                  : AppTheme.lightGray.withOpacity(0.2),
+                  : AppTheme.lightGray.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: IconButton(
@@ -415,7 +415,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
           Container(
             margin: const EdgeInsets.only(right: 16),
             decoration: BoxDecoration(
-              color: Colors.red.withOpacity(0.2),
+              color: Colors.red.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: IconButton(
@@ -448,15 +448,15 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: AppTheme.charcoal.withOpacity(0.3),
+                      color: AppTheme.charcoal.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: AppTheme.primaryColor.withOpacity(0.3),
+                        color: AppTheme.primaryColor.withValues(alpha: 0.3),
                         width: 1,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AppTheme.primaryColor.withOpacity(0.1),
+                          color: AppTheme.primaryColor.withValues(alpha: 0.1),
                           blurRadius: 20,
                           offset: const Offset(0, 10),
                         ),
@@ -469,7 +469,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                             Container(
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
-                                color: AppTheme.primaryColor.withOpacity(0.2),
+                                color: AppTheme.primaryColor.withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Icon(
@@ -544,10 +544,10 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                               vertical: 8,
                             ),
                             decoration: BoxDecoration(
-                              color: AppTheme.primaryColor.withOpacity(0.2),
+                              color: AppTheme.primaryColor.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
-                                color: AppTheme.primaryColor.withOpacity(0.3),
+                                color: AppTheme.primaryColor.withValues(alpha: 0.3),
                                 width: 1,
                               ),
                             ),
@@ -595,10 +595,10 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                             vertical: 12,
                           ),
                           decoration: BoxDecoration(
-                            color: AppTheme.accentColor.withOpacity(0.2),
+                            color: AppTheme.accentColor.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(25),
                             border: Border.all(
-                              color: AppTheme.accentColor.withOpacity(0.5),
+                              color: AppTheme.accentColor.withValues(alpha: 0.5),
                               width: 1,
                             ),
                           ),
@@ -632,10 +632,10 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                     height: 120,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: AppTheme.charcoal.withOpacity(0.3),
+                      color: AppTheme.charcoal.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: AppTheme.lightGray.withOpacity(0.1),
+                        color: AppTheme.lightGray.withValues(alpha: 0.1),
                         width: 1,
                       ),
                     ),
@@ -715,33 +715,33 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
             height: 180,
             decoration: BoxDecoration(
               color: isListening
-                  ? AppTheme.accentColor.withOpacity(0.1)
-                  : AppTheme.charcoal.withOpacity(0.8),
+                  ? AppTheme.accentColor.withValues(alpha: 0.1)
+                  : AppTheme.charcoal.withValues(alpha: 0.8),
               shape: BoxShape.circle,
               border: Border.all(
                 color: isListening
                     ? AppTheme.accentColor
-                    : AppTheme.lightGray.withOpacity(0.3),
+                    : AppTheme.lightGray.withValues(alpha: 0.3),
                 width: isListening ? 4 : 2,
               ),
               boxShadow: [
                 if (isListening) ...[
                   // Animated glow effect
                   BoxShadow(
-                    color: AppTheme.accentColor.withOpacity(0.4),
+                    color: AppTheme.accentColor.withValues(alpha: 0.4),
                     blurRadius: 30 + (_pulseController.value * 10),
                     spreadRadius: 8 + (_pulseController.value * 5),
                     offset: const Offset(0, 0),
                   ),
                   BoxShadow(
-                    color: AppTheme.accentColor.withOpacity(0.6),
+                    color: AppTheme.accentColor.withValues(alpha: 0.6),
                     blurRadius: 15 + (_pulseController.value * 5),
                     spreadRadius: 3 + (_pulseController.value * 2),
                     offset: const Offset(0, 0),
                   ),
                 ] else ...[
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
+                    color: Colors.black.withValues(alpha: 0.3),
                     blurRadius: 15,
                     offset: const Offset(0, 8),
                   ),
@@ -757,7 +757,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     color: isListening
-                        ? AppTheme.accentColor.withOpacity(0.2)
+                        ? AppTheme.accentColor.withValues(alpha: 0.2)
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(25),
                   ),
@@ -791,8 +791,8 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                     currentUser.email?.split('@')[0] ?? 'User',
                     style: TextStyle(
                       color: isListening
-                          ? AppTheme.accentColor.withOpacity(0.8)
-                          : AppTheme.lightGray.withOpacity(0.6),
+                          ? AppTheme.accentColor.withValues(alpha: 0.8)
+                          : AppTheme.lightGray.withValues(alpha: 0.6),
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),
@@ -841,7 +841,7 @@ class WaveformPainter extends CustomPainter {
 
     // Add glow effect
     final glowPaint = Paint()
-      ..color = waveColor.withOpacity(0.3)
+      ..color = waveColor.withValues(alpha: 0.3)
       ..strokeWidth = 6
       ..style = PaintingStyle.stroke
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
