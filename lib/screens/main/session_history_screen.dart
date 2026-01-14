@@ -431,7 +431,7 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen>
 
     if (difference == 0) return 'Today';
     if (difference == 1) return 'Yesterday';
-    if (difference < 7) return '${difference} days ago';
+    if (difference < 7) return '$difference days ago';
     if (difference < 30) return '${(difference / 7).floor()} weeks ago';
     if (difference < 365) return '${(difference / 30).floor()} months ago';
     return '${(difference / 365).floor()} years ago';
@@ -656,6 +656,6 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen>
 
   String _generateSessionCode() {
     final random = DateTime.now().millisecondsSinceEpoch;
-    return '${random.toString().substring(0, 6)}';
+    return random.toString().substring(0, 6);
   }
 }

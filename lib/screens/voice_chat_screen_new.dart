@@ -419,7 +419,9 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                             Container(
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
-                                color: AppTheme.primaryColor.withValues(alpha: 0.2),
+                                color: AppTheme.primaryColor.withValues(
+                                  alpha: 0.2,
+                                ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Icon(
@@ -479,7 +481,7 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                                           0xFFFF1493,
                                         ), // Pink for female
                                 ),
-                                child: Container(
+                                child: SizedBox(
                                   width: double.infinity,
                                   height: 120,
                                 ),
@@ -561,7 +563,9 @@ class _VoiceChatScreenState extends ConsumerState<VoiceChatScreen>
                             color: AppTheme.accentColor.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(25),
                             border: Border.all(
-                              color: AppTheme.accentColor.withValues(alpha: 0.5),
+                              color: AppTheme.accentColor.withValues(
+                                alpha: 0.5,
+                              ),
                               width: 1,
                             ),
                           ),

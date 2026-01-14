@@ -326,29 +326,27 @@ class _PostResolutionScreenState extends ConsumerState<PostResolutionScreen>
                   ),
                   const SizedBox(height: 12),
 
-                  ..._bondingActivities
-                      .map(
-                        (activity) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.circle,
-                                size: 8,
-                                color: Colors.purple.shade600,
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Text(
-                                  activity,
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ),
-                            ],
+                  ..._bondingActivities.map(
+                    (activity) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.circle,
+                            size: 8,
+                            color: Colors.purple.shade600,
                           ),
-                        ),
-                      )
-                      .toList(),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              activity,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

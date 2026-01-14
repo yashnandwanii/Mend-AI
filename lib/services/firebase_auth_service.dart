@@ -31,8 +31,7 @@ class FirebaseAuthService {
     try {
       await _googleSignIn.initialize();
 
-      final GoogleSignInAccount? googleUser = await _googleSignIn
-          .authenticate();
+      final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
 
       if (googleUser == null) {
         return GoogleSignInResult(errorMessage: 'Sign-in cancelled by user.');
@@ -279,14 +278,13 @@ class FirebaseAuthService {
       }
 
       await _googleSignIn.initialize();
-      final GoogleSignInAccount? googleUser = await _googleSignIn
-          .authenticate();
+      final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
 
       if (googleUser == null) {
         return AuthResult(errorMessage: 'Reauthentication cancelled.');
       }
 
-      final googleAuth = await googleUser.authentication;
+      final googleAuth = googleUser.authentication;
       final credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
       );

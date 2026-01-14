@@ -147,8 +147,9 @@ class _ScoringScreenState extends State<ScoringScreen>
   }
 
   String _generateOverallFeedback(List<Map<String, dynamic>> ratings) {
-    if (ratings.length < 2)
+    if (ratings.length < 2) {
       return "Waiting for both partners to complete their evaluations.";
+    }
 
     // Calculate average of both ratings
     double totalAverage = 0.0;

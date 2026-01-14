@@ -849,7 +849,7 @@ class _PostResolutionScreenState extends State<PostResolutionScreen>
                       _saveToInsights = value;
                     });
                   },
-                  activeColor: AppTheme.primary,
+                  activeThumbColor: AppTheme.primary,
                 ),
               ],
             ),

@@ -1355,7 +1355,7 @@ class _InsightsDashboardScreenState extends State<InsightsDashboardScreen>
 
     if (difference == 0) return 'Today';
     if (difference == 1) return 'Yesterday';
-    if (difference < 7) return '${difference} days ago';
+    if (difference < 7) return '$difference days ago';
     if (difference < 30) return '${(difference / 7).floor()} weeks ago';
     if (difference < 365) return '${(difference / 30).floor()} months ago';
     return '${(difference / 365).floor()} years ago';

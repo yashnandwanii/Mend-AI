@@ -328,15 +328,19 @@ class _UserScoringScreenState extends State<UserScoringScreen>
   List<String> _generateStrengths(Map<String, double> scores) {
     final strengths = <String>[];
 
-    if (scores['empathy']! >= 4.0)
+    if (scores['empathy']! >= 4.0) {
       strengths.add("Shows strong emotional understanding");
-    if (scores['listening']! >= 4.0)
+    }
+    if (scores['listening']! >= 4.0) {
       strengths.add("Excellent active listening skills");
-    if (scores['respect']! >= 4.0)
+    }
+    if (scores['respect']! >= 4.0) {
       strengths.add("Maintains respectful communication");
+    }
     if (scores['clarity']! >= 4.0) strengths.add("Expresses thoughts clearly");
-    if (scores['responsiveness']! >= 4.0)
+    if (scores['responsiveness']! >= 4.0) {
       strengths.add("Very responsive to concerns");
+    }
 
     if (strengths.isEmpty) {
       strengths.add("Engaged in the conversation willingly");
@@ -348,20 +352,27 @@ class _UserScoringScreenState extends State<UserScoringScreen>
   List<String> _generateImprovements(Map<String, double> scores) {
     final improvements = <String>[];
 
-    if (scores['empathy']! < 3.0)
+    if (scores['empathy']! < 3.0) {
       improvements.add("Practice showing more empathy");
-    if (scores['listening']! < 3.0)
+    }
+    if (scores['listening']! < 3.0) {
       improvements.add("Focus on active listening");
-    if (scores['reception']! < 3.0)
+    }
+    if (scores['reception']! < 3.0) {
       improvements.add("Be more open to feedback");
-    if (scores['clarity']! < 3.0)
+    }
+    if (scores['clarity']! < 3.0) {
       improvements.add("Work on expressing thoughts more clearly");
-    if (scores['respect']! < 3.0)
+    }
+    if (scores['respect']! < 3.0) {
       improvements.add("Practice more respectful communication");
-    if (scores['responsiveness']! < 3.0)
+    }
+    if (scores['responsiveness']! < 3.0) {
       improvements.add("Respond more thoughtfully to concerns");
-    if (scores['openmindedness']! < 3.0)
+    }
+    if (scores['openmindedness']! < 3.0) {
       improvements.add("Consider alternative perspectives more openly");
+    }
 
     if (improvements.isEmpty) {
       improvements.add("Continue building on current communication strengths");
@@ -371,8 +382,9 @@ class _UserScoringScreenState extends State<UserScoringScreen>
   }
 
   String _generateOverallFeedback(List<Map<String, dynamic>> ratings) {
-    if (ratings.length < 2)
+    if (ratings.length < 2) {
       return "Waiting for both partners to complete their evaluations.";
+    }
 
     // Calculate average of both ratings
     double totalAverage = 0.0;
